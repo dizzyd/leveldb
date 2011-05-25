@@ -83,7 +83,7 @@ class VersionEdit {
  private:
   friend class VersionSet;
 
-public:  typedef std::set< std::pair<int, uint64_t> > DeletedFileSet;  private:
+  USED_BY_NESTED_FRIEND(typedef std::set< std::pair<int, uint64_t> > DeletedFileSet)
 
   std::string comparator_;
   uint64_t log_number_;
@@ -96,9 +96,9 @@ public:  typedef std::set< std::pair<int, uint64_t> > DeletedFileSet;  private:
   bool has_next_file_number_;
   bool has_last_sequence_;
 
-public:  std::vector< std::pair<int, InternalKey> > compact_pointers_;  private:
-public:  DeletedFileSet deleted_files_;  private:
-public:  std::vector< std::pair<int, FileMetaData> > new_files_;  private:
+  USED_BY_NESTED_FRIEND(std::vector< std::pair<int, InternalKey> > compact_pointers_)
+  USED_BY_NESTED_FRIEND(DeletedFileSet deleted_files_)
+  USED_BY_NESTED_FRIEND(std::vector< std::pair<int, FileMetaData> > new_files_)
 };
 
 }

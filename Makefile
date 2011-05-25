@@ -5,8 +5,8 @@
 CC = g++
 
 # Uncomment one of the following to switch between debug and opt mode
-#OPT = -O2 -DNDEBUG
-OPT = -g2 -fPIC
+OPT = -O2 -DNDEBUG
+#OPT = -g2 -fPIC
 
 CFLAGS = -c -DLEVELDB_PLATFORM_STD -I. -I./include $(OPT)
 
@@ -81,7 +81,7 @@ check: $(TESTS)
 	for t in $(TESTS); do echo "***** Running $$t"; ./$$t || exit 1; done
 
 clean:
-	rm -f $(PROGRAMS) */*.o */*.a
+	rm -f $(PROGRAMS) */*.o */*.a build/build_config.h
 
 db_bench: db/db_bench.o $(LIBOBJECTS) $(TESTUTIL)
 	$(CC) $(LDFLAGS) db/db_bench.o $(LIBOBJECTS) $(TESTUTIL) -o $@
