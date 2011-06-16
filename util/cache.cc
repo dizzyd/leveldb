@@ -4,7 +4,7 @@
 
 #if defined(LEVELDB_PLATFORM_POSIX) || defined(LEVELDB_PLATFORM_ANDROID)
 #include <unordered_set>
-#elif defined(LEVELDB_PLATFORM_OSX)
+#elif defined(LEVELDB_PLATFORM_STD)
 #include <ext/hash_set>
 #elif defined(LEVELDB_PLATFORM_CHROMIUM)
 #include "base/hash_tables.h"

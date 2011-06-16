@@ -2,8 +2,6 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file. See the AUTHORS file for names of contributors.
 
-CC = g++
-
 #-----------------------------------------------
 # Uncomment exactly one of the lines labelled (A), (B), and (C) below
 # to switch between compilation modes.
@@ -13,24 +11,12 @@ OPT = -O2 -DNDEBUG       # (A) Production use (optimized mode)
 # OPT = -O2 -g2 -DNDEBUG # (C) Profiling mode: opt, but w/debugging symbols
 #-----------------------------------------------
 
+$(shell sh ./detect-platform)
+include build/build_config.mk
 
-UNAME := $(shell uname)
-
-ifeq ($(UNAME), Darwin)
-# To build for iOS, set PLATFORM=IOS.
-ifndef PLATFORM
-PLATFORM=OSX
-endif # PLATFORM
-PLATFORM_CFLAGS = -DLEVELDB_PLATFORM_OSX
-PORT_MODULE = port_osx.o
-else # UNAME
-PLATFORM_CFLAGS = -DLEVELDB_PLATFORM_POSIX -std=c++0x
-PORT_MODULE = port_posix.o
-endif # UNAME
-
-CFLAGS = -c -I. -I./include $(PLATFORM_CFLAGS) $(OPT)
-
-LDFLAGS=-lpthread
+CC = g++
+CFLAGS = -c -I. -I./include $(PORT_CFLAGS) $(OPT)
+LDFLAGS=-lpthread $(PLATFORM_LDFLAGS)
 
 LIBOBJECTS = \
 	./db/builder.o \
@@ -103,7 +89,7 @@ check: $(TESTS)
 
 clean:
 	-rm -f $(PROGRAMS) $(LIBRARY) */*.o ios-x86/*/*.o ios-arm/*/*.o
-	-rmdir -p ios-x86/* ios-arm/*
+	-rm -rf ios-x86/* ios-arm/*
 
 $(LIBRARY): $(LIBOBJECTS)
 	rm -f $@
