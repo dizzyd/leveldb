@@ -33,10 +33,12 @@
 #define IS_LITTLE_ENDIAN false
 #endif
 
-
+#if defined(OS_MACOSX) || defined(OS_SOLARIS)
 #define fread_unlocked fread
 #define fwrite_unlocked fwrite
 #define fflush_unlocked fflush
+#endif
+
 #if defined(OS_MACOSX)
 #define fdatasync fsync
 #endif
