@@ -7,13 +7,18 @@ rm -f build/build_config.h build/build_config.mk
 case `uname -s` in
     Darwin)
         PLATFORM=OS_MACOSX
+        echo "PLATFORM_CXXFLAGS=-pthread" >> build/build_config.mk
+        echo "PLATFORM_LDFLAGS=-pthread"  >> build/build_config.mk
         ;;
     Linux)
         PLATFORM=OS_LINUX
+        echo "PLATFORM_CXXFLAGS=-pthread" >> build/build_config.mk
+        echo "PLATFORM_LDFLAGS=-pthread"  >> build/build_config.mk
         ;;
     SunOS)
         PLATFORM=OS_SOLARIS
-        echo "PLATFORM_LDFLAGS=-lrt " >>build/build_config.mk
+        echo "PLATFORM_CXXFLAGS=-D_REENTRANT"  >> build/build_config.mk
+        echo "PLATFORM_LDFLAGS=-lpthread -lrt" >> build/build_config.mk
         ;;
     *)
         echo "Unknown platform!"
